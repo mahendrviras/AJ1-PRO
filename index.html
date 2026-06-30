@@ -1,0 +1,3148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYCK — Step Into the Future</title>
+  <meta name="description" content="Discover PYCK AIR ONE — A premium, high-top sneaker engineered with air cushion technology, full-grain Italian leather, and responsive design.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%230a0a0a%22 stroke=%22%23FF4D00%22 stroke-width=%224%22/><text y=%2270%22 x=%2250%22 font-size=%2260%22 font-weight=%22900%22 font-family=%22system-ui, sans-serif%22 fill=%22%23FF4D00%22 text-anchor=%22middle%22>P</text></svg>">
+
+  <!-- Google Fonts: Inter (300 to 900) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <style>
+    /* ═══ DESIGN SYSTEM & VARIABLES ═══ */
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f7;
+      --orange: #FF4D00;
+      --grey-dark: #1d1d1f;
+      --grey-mid: #6e6e73;
+      --grey-light: #86868b;
+      --surface: #1a1a1a;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --glow-shadow: 0 0 40px rgba(255, 77, 0, 0.15);
+      --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ═══ BASE RESET ═══ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--black);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: none;
+    }
+
+    /* ═══ CUSTOM CURSOR ═══ */
+    #custom-cursor {
+      width: 8px;
+      height: 8px;
+      background-color: var(--orange);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10000;
+      transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+    }
+
+    #custom-cursor-follower {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 77, 0, 0.3);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.08s ease-out, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Hover state for cursor */
+    body.hover-interactive #custom-cursor {
+      width: 12px;
+      height: 12px;
+      background-color: var(--white);
+    }
+
+    body.hover-interactive #custom-cursor-follower {
+      width: 48px;
+      height: 48px;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ═══ SCROLL PROGRESS BAR ═══ */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--orange);
+      z-index: 9999;
+      width: 0%;
+    }
+
+    /* ═══ FIXED NAVIGATION BAR ═══ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4%;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      height: 30px;
+      width: 120px;
+    }
+
+    .nav-logo svg {
+      height: 100%;
+      width: 100%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      padding: 6px 0;
+      color: var(--grey-light);
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--orange);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Mobile Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background-color: var(--orange);
+      transition: var(--transition-smooth);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      z-index: 999;
+      transform: translateY(-100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white);
+    }
+
+    /* ═══ SECTION 1: PRELOADER ═══ */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--black);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .preloader-logo {
+      width: 200px;
+      height: 50px;
+      color: var(--white);
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .preloader-line-wrap {
+      width: 120px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .preloader-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--orange);
+    }
+
+    .preloader-counter {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--grey-light);
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══ SECTION 2: HERO ═══ */
+    #hero {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #1c1c1e 0%, var(--black) 80%);
+      overflow: hidden;
+    }
+
+    .hero-title-container {
+      position: absolute;
+      z-index: 1;
+      text-align: center;
+      pointer-events: none;
+      width: 100%;
+    }
+
+    .hero-bg-title {
+      font-size: clamp(80px, 20vw, 240px);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: var(--white);
+      line-height: 0.8;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .hero-shoe-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 650px;
+      height: 65vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -40px;
+    }
+
+    .hero-shoe {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: auto;
+      filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
+    }
+
+    .hero-shadow {
+      position: absolute;
+      bottom: 5%;
+      width: 60%;
+      height: 30px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-details {
+      position: absolute;
+      bottom: 12%;
+      z-index: 3;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-tagline {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--grey-light);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      background: transparent;
+      color: var(--white);
+      transition: var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(20px);
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-cta:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: 0 10px 30px rgba(255, 77, 0, 0.3);
+      transform: scale(1.05);
+    }
+
+    .scroll-explore {
+      position: absolute;
+      bottom: 3%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--grey-mid);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .scroll-explore svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--grey-mid);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+      60% { transform: translateY(-3px); }
+    }
+
+    /* ═══ GENERAL SECTION STYLING ═══ */
+    section {
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 80px 8%;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    /* ═══ SECTION 3: MANIFESTO ═══ */
+    #manifesto {
+      justify-content: center;
+      text-align: center;
+      background: var(--black);
+    }
+
+    .manifesto-container {
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .manifesto-line {
+      overflow: hidden;
+      height: auto;
+    }
+
+    .manifesto-line span {
+      display: block;
+      font-size: clamp(28px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--white);
+      transform: translateY(100%);
+    }
+
+    .manifesto-line span span.highlight {
+      color: var(--orange);
+    }
+
+    .manifesto-subtext {
+      margin-top: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--grey-mid);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+
+    /* ═══ FEATURE SECTIONS (2-COLUMN GRID) ═══ */
+    .grid-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 5%;
+      align-items: center;
+    }
+
+    .grid-container.flipped {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+
+    .col-image {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+      width: 100%;
+      perspective: 1000px;
+    }
+
+    .col-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+      transition: transform 0.2s ease-out;
+    }
+
+    .col-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .feat-label {
+      font-size: 11px;
+      color: var(--orange);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .feat-title {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .feat-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    .feat-description {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--grey-light);
+      font-weight: 400;
+    }
+
+    /* Stats formatting */
+    .feat-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .stat-item {
+      border-left: 2px solid var(--orange);
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-number {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--grey-light);
+      font-weight: 500;
+    }
+
+    /* Checkmarks lists */
+    .feat-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .feat-list-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .feat-list-item svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--orange);
+      flex-shrink: 0;
+    }
+
+    /* ═══ SECTION 4: AIR CUSHION ═══ */
+    .sole-glow {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(255, 77, 0, 0.2) 0%, rgba(255, 77, 0, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+      animation: glow-pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    /* ═══ SECTION 5: PREMIUM LEATHER ═══ */
+    #feature-leather {
+      background: linear-gradient(180deg, var(--black) 0%, #0e0a08 100%);
+    }
+
+    .detail-overlay-card {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      width: 180px;
+      height: 180px;
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .detail-overlay-image {
+      width: 100%;
+      height: 110px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .detail-overlay-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-overlay-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .detail-overlay-sub {
+      font-size: 9px;
+      color: var(--grey-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══ SECTION 6: BREATHABLE MESH ═══ */
+    .particle-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .mesh-particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      animation: float-up 6s infinite linear;
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-10vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* ═══ SECTION 7: HEEL COUNTER ═══ */
+    .blueprint-grid {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+    }
+
+    .tpu-pulse-outline {
+      position: absolute;
+      border: 2px dashed rgba(255, 77, 0, 0.6);
+      border-radius: 50%;
+      width: 250px;
+      height: 250px;
+      pointer-events: none;
+      animation: pulse-dashed 2.5s infinite ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tpu-pulse-label {
+      position: absolute;
+      top: -30px;
+      background: var(--orange);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 5px 15px rgba(255, 77, 0, 0.4);
+    }
+
+    @keyframes pulse-dashed {
+      0%, 100% { transform: scale(0.95); opacity: 0.4; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    /* ═══ SECTION 8: CUSTOM INSOLE ═══ */
+    .heatmap-overlay {
+      position: absolute;
+      width: 200px;
+      height: 350px;
+      border-radius: 100px;
+      background: radial-gradient(ellipse, rgba(0, 0, 255, 0.4) 0%, rgba(0, 255, 0, 0.3) 40%, rgba(255, 255, 0, 0.2) 65%, rgba(255, 0, 0, 0.1) 85%, transparent 100%);
+      pointer-events: none;
+      filter: blur(15px);
+      mix-blend-mode: color-dodge;
+      animation: heatmap-shift 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes heatmap-shift {
+      0% { transform: translate(-10px, -10px) rotate(0deg) scale(0.9); }
+      100% { transform: translate(10px, 10px) rotate(10deg) scale(1.1); }
+    }
+
+    /* ═══ SECTION 9: ANATOMY EXPLODED VIEW ═══ */
+    #anatomy {
+      background: var(--white);
+      color: var(--black);
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 120px;
+      padding-bottom: 120px;
+      transition: background-color 0.8s ease, color 0.8s ease;
+    }
+
+    .anatomy-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .anatomy-label {
+      font-size: 13px;
+      color: var(--grey-mid);
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .anatomy-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .anatomy-visual-container {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      height: 75vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .exploded-shoe-img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Floating Technical Labels */
+    .anatomy-pointer {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+      z-index: 5;
+    }
+
+    .anatomy-pointer.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pointer-text {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pointer-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #111;
+    }
+
+    .pointer-desc {
+      font-size: 11px;
+      color: #666;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .pointer-line {
+      height: 1px;
+      background-color: #bbb;
+      width: 0px;
+      transition: width 0.6s ease-in-out;
+      position: relative;
+    }
+
+    .pointer-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--orange);
+      border-radius: 50%;
+      position: absolute;
+      top: -3px;
+      right: 0;
+    }
+
+    /* Anatomy Pointer positions */
+    #pointer-laces { top: 8%; left: 10%; flex-direction: row; }
+    #pointer-laces.active .pointer-line { width: 150px; }
+
+    #pointer-tongue { top: 20%; right: 10%; flex-direction: row-reverse; }
+    #pointer-tongue.active .pointer-line { width: 140px; }
+    #pointer-tongue .pointer-dot { left: 0; right: auto; }
+
+    #pointer-upper { top: 35%; left: 8%; flex-direction: row; }
+    #pointer-upper.active .pointer-line { width: 180px; }
+
+    #pointer-mesh { top: 48%; right: 6%; flex-direction: row-reverse; }
+    #pointer-mesh.active .pointer-line { width: 190px; }
+    #pointer-mesh .pointer-dot { left: 0; right: auto; }
+
+    #pointer-insole { top: 62%; left: 10%; flex-direction: row; }
+    #pointer-insole.active .pointer-line { width: 160px; }
+
+    #pointer-midsole { top: 75%; right: 10%; flex-direction: row-reverse; }
+    #pointer-midsole.active .pointer-line { width: 150px; }
+    #pointer-midsole .pointer-dot { left: 0; right: auto; }
+
+    #pointer-outsole { bottom: 6%; left: 15%; flex-direction: row; }
+    #pointer-outsole.active .pointer-line { width: 130px; }
+
+    .anatomy-footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--grey-mid);
+    }
+
+    /* ═══ SECTION 10: COLORWAYS ═══ */
+    #colorways {
+      display: block;
+      padding: 0;
+      background: var(--black);
+    }
+
+    .colorways-intro {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--black);
+    }
+
+    .colorways-intro-label {
+      font-size: 13px;
+      color: var(--grey-mid);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .colorways-intro-title {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    /* Scroll snapping container */
+    .colorways-snap-container {
+      scroll-snap-type: y mandatory;
+      overflow-y: auto;
+      height: 100vh;
+      width: 100%;
+    }
+
+    /* Hide scrollbar */
+    .colorways-snap-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .colorway-slide {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 80px 4%;
+    }
+
+    .colorway-img-wrap {
+      width: 100%;
+      max-width: 550px;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(60px);
+      opacity: 0;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    }
+
+    .colorway-slide.active .colorway-img-wrap {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .colorway-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,0.7));
+    }
+
+    .colorway-details {
+      text-align: center;
+      margin-top: 30px;
+      z-index: 2;
+    }
+
+    .colorway-name {
+      font-size: 36px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .colorway-tagline {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--grey-light);
+    }
+
+    /* Sticky Color Selector Bar */
+    .color-picker-bar {
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 12px 24px;
+      display: flex;
+      gap: 16px;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .color-picker-bar.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .color-picker-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .color-picker-dot::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--orange);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    .color-picker-dot.active {
+      transform: scale(1.2);
+    }
+
+    .color-picker-dot.active::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .dot-black { background: #111; }
+    .dot-white { background: #fff; border: 1px solid #ccc; }
+    .dot-crimson { background: #800; }
+    .dot-navy { background: #001f3f; }
+
+    /* ═══ SECTION 11: SIZE & FIT ═══ */
+    #sizing {
+      background: var(--black);
+    }
+
+    .dimensions-overlay-lines {
+      position: absolute;
+      width: 80%;
+      height: 65%;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dim-line {
+      position: absolute;
+      border: 1px dashed rgba(255,255,255,0.3);
+    }
+
+    .dim-label {
+      position: absolute;
+      font-size: 11px;
+      background: var(--grey-dark);
+      border: 1px solid var(--border-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* Horizontal width dimension line */
+    .dim-width {
+      width: 80%;
+      height: 1px;
+      bottom: 10%;
+      left: 10%;
+    }
+
+    .dim-width::before, .dim-width::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 10px;
+      background: rgba(255,255,255,0.3);
+      top: -5px;
+    }
+
+    .dim-width::before { left: 0; }
+    .dim-width::after { right: 0; }
+
+    .dim-width-label {
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Vertical height dimension line */
+    .dim-height {
+      height: 70%;
+      width: 1px;
+      left: 8%;
+      top: 15%;
+    }
+
+    .dim-height::before, .dim-height::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 10px;
+      background: rgba(255,255,255,0.3);
+      left: -5px;
+    }
+
+    .dim-height::before { top: 0; }
+    .dim-height::after { bottom: 0; }
+
+    .dim-height-label {
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+    }
+
+    /* Size grid formatting */
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .size-btn {
+      aspect-ratio: 1.2;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition-smooth);
+    }
+
+    .size-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .size-btn.active {
+      background: var(--orange);
+      color: var(--black);
+      border-color: var(--orange);
+      font-weight: 700;
+    }
+
+    .width-toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .width-toggle-label {
+      font-size: 14px;
+      color: var(--grey-light);
+    }
+
+    .width-toggle-btn {
+      padding: 8px 18px;
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .width-toggle-btn.active {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .conversion-helper {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--grey-light);
+      background: rgba(255,255,255,0.03);
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ═══ SECTION 12: PRICING ═══ */
+    #pricing {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      background: radial-gradient(circle at bottom, #250b00 0%, var(--black) 60%);
+    }
+
+    .pricing-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .price-tag {
+      font-size: clamp(60px, 10vw, 120px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .price-subtitle {
+      font-size: 18px;
+      color: var(--grey-light);
+      font-weight: 400;
+    }
+
+    .pricing-cards-container {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .pricing-card {
+      background: rgba(26, 26, 26, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Featured pricing card */
+    .pricing-card.featured {
+      border: 2px solid var(--orange);
+      box-shadow: var(--glow-shadow);
+      background: rgba(30, 20, 15, 0.4);
+      transform: scale(1.03);
+    }
+
+    .pricing-card.featured:hover {
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--orange);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 6px 14px;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .card-tier {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--grey-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pricing-card.featured .card-tier {
+      color: var(--orange);
+    }
+
+    .card-price {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 10px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 20px;
+    }
+
+    .card-features li {
+      font-size: 14px;
+      color: var(--grey-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-features li::before {
+      content: '•';
+      color: var(--orange);
+      font-weight: bold;
+    }
+
+    .card-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      transition: var(--transition-smooth);
+    }
+
+    .card-btn.outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+
+    .card-btn.outline:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .card-btn.solid {
+      background: var(--orange);
+      color: var(--black);
+    }
+
+    .card-btn.solid:hover {
+      background: var(--white);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+    }
+
+    /* ═══ SECTION 13: LIFESTYLE GALLERY ═══ */
+    #lifestyle {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 30px;
+      overflow-x: hidden;
+    }
+
+    .lifestyle-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .lifestyle-label {
+      font-size: 11px;
+      color: var(--grey-mid);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .lifestyle-horizontal-container {
+      width: 100vw;
+      margin-left: -8%;
+      display: flex;
+      gap: 30px;
+      padding: 20px 8%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .lifestyle-horizontal-container::-webkit-scrollbar {
+      display: none; /* Safari/Chrome */
+    }
+
+    .lifestyle-card {
+      min-width: 75vw;
+      height: 65vh;
+      border-radius: 16px;
+      overflow: hidden;
+      scroll-snap-align: center;
+      position: relative;
+    }
+
+    .lifestyle-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lifestyle-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .lifestyle-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 40px;
+    }
+
+    .lifestyle-title {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lifestyle-scroll-helper {
+      align-self: center;
+      font-size: 11px;
+      color: var(--grey-mid);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* ═══ SECTION 14: REVIEWS ═══ */
+    #reviews {
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 50px;
+      background: #111111;
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+
+    .reviews-header {
+      width: 100%;
+      text-align: left;
+    }
+
+    .reviews-label {
+      font-size: 13px;
+      color: var(--grey-mid);
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .reviews-title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .reviews-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: var(--transition-smooth);
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .review-stars {
+      color: var(--orange);
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--white);
+      font-weight: 450;
+    }
+
+    .review-author {
+      font-size: 12px;
+      color: var(--grey-mid);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: auto;
+    }
+
+    /* ═══ SECTION 15: NEWSLETTER + FOOTER ═══ */
+    #footer-section {
+      min-height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-bottom: 40px;
+      background: linear-gradient(180deg, var(--black) 0%, #111113 100%);
+    }
+
+    .newsletter-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      max-width: 600px;
+      margin: auto 0;
+      position: relative;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .newsletter-bg-image {
+      position: absolute;
+      top: -80px;
+      width: 250px;
+      height: 250px;
+      opacity: 0.15;
+      z-index: -1;
+      pointer-events: none;
+      filter: drop-shadow(0 0 30px rgba(255,77,0,0.3));
+    }
+
+    .news-label {
+      font-size: 12px;
+      color: var(--grey-mid);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .news-title {
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 950;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 0.95;
+    }
+
+    .news-title span {
+      display: inline-block;
+    }
+
+    .news-desc {
+      font-size: 16px;
+      color: var(--grey-light);
+      max-width: 450px;
+      line-height: 1.6;
+    }
+
+    .news-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 480px;
+      margin-top: 10px;
+    }
+
+    .news-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+      padding: 14px 4px;
+      font-family: var(--font);
+      font-size: 16px;
+      color: var(--white);
+      text-align: center;
+      outline: none;
+      transition: border-bottom-color 0.3s ease;
+    }
+
+    .news-input::placeholder {
+      color: #444;
+      font-weight: 500;
+    }
+
+    .news-input:focus {
+      border-bottom-color: var(--orange);
+    }
+
+    .news-btn {
+      background: var(--orange);
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 16px 48px;
+      border-radius: 50px;
+      transition: var(--transition-smooth);
+    }
+
+    .news-btn:hover {
+      background: var(--white);
+      color: var(--black);
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+    }
+
+    /* Social Icons Row */
+    .news-socials {
+      display: flex;
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    .social-icon-btn {
+      color: var(--white);
+      transition: var(--transition-smooth);
+    }
+
+    .social-icon-btn:hover {
+      color: var(--orange);
+      transform: translateY(-3px);
+    }
+
+    .social-icon-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Footer structure */
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 50px;
+    }
+
+    .footer-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--grey-mid);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col ul a {
+      font-size: 13px;
+      color: var(--grey-light);
+      transition: color 0.3s ease;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      padding-top: 30px;
+    }
+
+    .footer-bottom-left {
+      display: flex;
+      align-items: center;
+      height: 22px;
+      width: 90px;
+    }
+
+    .footer-bottom-left svg {
+      height: 100%;
+      width: 100%;
+    }
+
+    .footer-bottom-center {
+      font-size: 12px;
+      color: #444;
+      font-style: italic;
+    }
+
+    .footer-bottom-right {
+      font-size: 12px;
+      color: var(--grey-mid);
+    }
+
+    /* ═══ RESPONSIVE DESIGN & MEDIA QUERIES ═══ */
+
+    /* Desktop/Tablet transition (under 1200px) */
+    @media (max-width: 1200px) {
+      .pricing-cards-container {
+        gap: 20px;
+      }
+      .reviews-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Tablet/Mobile transition (under 992px) */
+    @media (max-width: 992px) {
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Mobile view (under 768px) */
+    @media (max-width: 768px) {
+      /* Navigation */
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+
+      /* Sections General */
+      section {
+        padding: 80px 6%;
+      }
+
+      /* Grid Layouts */
+      .grid-container, .grid-container.flipped {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .col-image {
+        height: 50vh;
+        order: -1; /* Image always goes top on mobile */
+      }
+
+      .col-text {
+        text-align: center;
+        align-items: center;
+      }
+
+      .feat-divider {
+        align-self: center;
+      }
+
+      /* Detail overlay placement on mobile */
+      .detail-overlay-card {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 2%;
+      }
+
+      /* Custom cursor hide on mobile */
+      #custom-cursor, #custom-cursor-follower {
+        display: none;
+      }
+
+      /* Anatomy pointers adjustment */
+      .exploded-shoe-img {
+        height: auto;
+        width: 100%;
+        max-height: 50vh;
+      }
+      .anatomy-pointer {
+        display: none; /* Hide interactive pointers on mobile for layout stability */
+      }
+
+      /* Pricing Grid */
+      .pricing-cards-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+      .pricing-card.featured:hover {
+        transform: translateY(-8px) scale(1);
+      }
+
+      /* Reviews Grid */
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Footer Grid */
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+
+      .footer-bottom-bar {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+    }
+
+    /* Smaller Mobiles */
+    @media (max-width: 480px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .width-toggle-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal-text, .fade-in-up {
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor Elements -->
+  <div id="custom-cursor"></div>
+  <div id="custom-cursor-follower"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="js-scroll-progress"></div>
+
+  <!-- Fixed Navigation Bar -->
+  <header>
+    <nav id="js-navbar">
+      <div class="nav-logo">
+        <a href="#" aria-label="PYCK Home">
+          <!-- PYCK SVG LOGO -->
+          <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 5 H25 C33 5, 36 10, 36 16 C36 22, 33 27, 25 27 H18 V35 H10 V5 Z M18 11 V21 H24 C27 21, 28 20, 28 16 C28 12, 27 11, 24 11 H18 Z" fill="currentColor" />
+            <path d="M42 5 L52 20 L62 5 H70 L55 25 V35 H47 V25 L32 5 H42 Z" fill="currentColor" />
+            <path d="M96 8 C93 6, 90 5, 87 5 C78 5, 72 12, 72 20 C72 28, 78 35, 87 35 C90 35, 93 34, 96 32 V26 C93 28, 91 29, 87 29 C83 29, 80 25, 80 20 C80 15, 83 11, 87 11 C91 11, 93 12, 96 14 V8 Z" fill="currentColor" />
+            <path d="M104 5 H112 V18 L122 5 H132 L119 20 L133 35 H123 L112 22 V35 H104 V5 Z" fill="currentColor" />
+          </svg>
+        </a>
+      </div>
+      
+      <ul class="nav-links">
+        <li><a href="#manifesto" class="nav-item">Manifesto</a></li>
+        <li><a href="#features-anchor" class="nav-item">Features</a></li>
+        <li><a href="#colorways" class="nav-item">Colorways</a></li>
+        <li><a href="#pricing" class="nav-item">Price</a></li>
+      </ul>
+
+      <div class="hamburger" id="js-hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Dropdown Navigation Menu -->
+  <div class="mobile-menu" id="js-mobile-menu">
+    <a href="#manifesto" class="js-mobile-link">Manifesto</a>
+    <a href="#features-anchor" class="js-mobile-link">Features</a>
+    <a href="#colorways" class="js-mobile-link">Colorways</a>
+    <a href="#pricing" class="js-mobile-link">Price</a>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- SECTION 1: PRELOADER -->
+    <div id="preloader">
+      <div class="preloader-content">
+        <!-- PYCK LOGO SVG in Preloader -->
+        <svg class="preloader-logo" id="js-loader-logo" viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 5 H25 C33 5, 36 10, 36 16 C36 22, 33 27, 25 27 H18 V35 H10 V5 Z M18 11 V21 H24 C27 21, 28 20, 28 16 C28 12, 27 11, 24 11 H18 Z" fill="currentColor" />
+          <path d="M42 5 L52 20 L62 5 H70 L55 25 V35 H47 V25 L32 5 H42 Z" fill="currentColor" />
+          <path d="M96 8 C93 6, 90 5, 87 5 C78 5, 72 12, 72 20 C72 28, 78 35, 87 35 C90 35, 93 34, 96 32 V26 C93 28, 91 29, 87 29 C83 29, 80 25, 80 20 C80 15, 83 11, 87 11 C91 11, 93 12, 96 14 V8 Z" fill="currentColor" />
+          <path d="M104 5 H112 V18 L122 5 H132 L119 20 L133 35 H123 L112 22 V35 H104 V5 Z" fill="currentColor" />
+        </svg>
+        <div class="preloader-line-wrap">
+          <div class="preloader-line" id="js-loader-line"></div>
+        </div>
+        <div class="preloader-counter" id="js-loader-counter">0%</div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: HERO -->
+    <section id="hero" class="interactive-hover-container">
+      <div class="hero-title-container">
+        <h1 class="hero-bg-title" id="js-hero-title">PYCK</h1>
+      </div>
+      <div class="hero-shoe-container" id="js-hero-shoe-box">
+        <img class="hero-shoe" src="assets/hero_shoe.png" alt="PYCK AIR ONE high-top basketball sneaker in matte black with bright orange sole accents" id="js-hero-shoe">
+        <div class="hero-shadow" id="js-hero-shadow"></div>
+      </div>
+      <div class="hero-details">
+        <p class="hero-tagline" id="js-hero-tagline">Step Into the Future.</p>
+        <a href="#pricing" class="hero-cta" id="js-hero-cta" aria-label="Pre-order PYCK AIR ONE sneaker for $189">Pre-Order — $189</a>
+      </div>
+      <div class="scroll-explore">
+        <span>Scroll to Explore</span>
+        <!-- Bouncing Chevron -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTRO MANIFESTO -->
+    <section id="manifesto">
+      <div class="manifesto-container">
+        <h2 class="manifesto-line"><span class="manifesto-trigger">We didn't just make a shoe.</span></h2>
+        <h2 class="manifesto-line"><span class="manifesto-trigger">We <span class="highlight">engineered</span> a statement.</span></h2>
+        <h2 class="manifesto-line"><span class="manifesto-trigger">Every <span class="highlight">stitch</span>. Every <span class="highlight">curve</span>.</span></h2>
+        <h2 class="manifesto-line"><span class="manifesto-trigger">Precision meets <span class="highlight">rebellion</span>.</span></h2>
+        <p class="manifesto-subtext" id="js-manifesto-subtext">Introducing PYCK AIR ONE</p>
+      </div>
+    </section>
+
+    <div id="features-anchor"></div>
+
+    <!-- SECTION 4: FEATURE — AIR CUSHION TECH -->
+    <section id="feature-air" class="feature-sec">
+      <div class="grid-container">
+        <div class="col-image parallax-container">
+          <div class="sole-glow"></div>
+          <img class="parallax-img" src="assets/shoe_sole_bottom.png" alt="Bottom view of the rubber herringbone traction patterned sole of PYCK AIR ONE" loading="lazy">
+        </div>
+        <div class="col-text">
+          <span class="feat-label">Technology</span>
+          <h3 class="feat-title">AIR CUSHION<br>TECH</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">Cloud-like comfort meets ground-breaking impact absorption. Every step is engineered with responsive pressurized capsules optimized for extreme energy return.</p>
+          <div class="feat-stats">
+            <div class="stat-item">
+              <span class="stat-number">40%</span>
+              <span class="stat-label">More Impact Absorption</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">12hr</span>
+              <span class="stat-label">Comfort Tested & Verified</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">3x</span>
+              <span class="stat-label">Reactive Pressure Zone Mapping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FEATURE — PREMIUM LEATHER -->
+    <section id="feature-leather" class="feature-sec">
+      <div class="grid-container flipped">
+        <div class="col-text">
+          <span class="feat-label">Materials</span>
+          <h3 class="feat-title">PREMIUM<br>TUMBLED LEATHER</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">Hand-selected, full-grain Italian leather selected for its soft feel, flex pattern, and durability. Naturally breathable, it ages beautifully and adapts to your foot with zero break-in time.</p>
+          <ul class="feat-list">
+            <li class="feat-list-item">
+              <!-- Inline Checkmark SVG -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>Full-grain tumbled Italian leather upper shell</span>
+            </li>
+            <li class="feat-list-item">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>Hydrophobic water-resistant nano coating protection</span>
+            </li>
+            <li class="feat-list-item">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>Guaranteed zero break-in timeframe</span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-image parallax-container">
+          <img class="parallax-img" src="assets/shoe_front_angle.png" alt="Front angle view of PYCK AIR ONE showcasing the leather detailing" loading="lazy">
+          <!-- Detail Texture Card Overlay -->
+          <div class="detail-overlay-card">
+            <div class="detail-overlay-image">
+              <img src="assets/texture_leather.jpg" alt="Macro detail photography of the black tumbled leather texture" loading="lazy">
+            </div>
+            <div>
+              <div class="detail-overlay-label">LEATHER DETAIL</div>
+              <div class="detail-overlay-sub">100% Full-grain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: FEATURE — BREATHABLE MESH -->
+    <section id="feature-mesh" class="feature-sec">
+      <div class="grid-container">
+        <div class="col-image parallax-container">
+          <!-- Particle Airflow Simulation Container -->
+          <div class="particle-container" id="js-particle-container"></div>
+          <img class="parallax-img" src="assets/shoe_side_left.png" alt="Left side profile view of PYCK AIR ONE high-top sneaker" loading="lazy">
+          <!-- Detail Texture Card Overlay -->
+          <div class="detail-overlay-card">
+            <div class="detail-overlay-image">
+              <img src="assets/texture_mesh.jpg" alt="Macro detail photography of the breathable black mesh liner" loading="lazy">
+            </div>
+            <div>
+              <div class="detail-overlay-label">MESH DETAIL</div>
+              <div class="detail-overlay-sub">Micro-perforated</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-text">
+          <span class="feat-label">Comfort</span>
+          <h3 class="feat-title">BREATHE<br>DIFFERENT</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">Our dual-zone 3D-woven mesh liner channels heat and moisture away from your skin. Internal ventilation channels allow cooling airflow to circulate continuously.</p>
+          <div class="feat-stats">
+            <div class="stat-item">
+              <span class="stat-number">360°</span>
+              <span class="stat-label">Directional Airflow Cooling System</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">48hr</span>
+              <span class="stat-label">Inbuilt Anti-Microbial Lining Shield</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">0.3mm</span>
+              <span class="stat-label">Woven Micro-Perforation Sizing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: FEATURE — HEEL COUNTER -->
+    <section id="feature-heel" class="feature-sec blueprint-grid">
+      <div class="grid-container flipped">
+        <div class="col-text">
+          <span class="feat-label">Support</span>
+          <h3 class="feat-title">LOCKED<br>IN</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">A high-density thermoplastic polyurethane (TPU) heel counter anchors your foot securely to the footbed, preventing slipping and stabilizing your ankle on lateral cuts.</p>
+          <div class="feat-stats">
+            <div class="stat-item">
+              <span class="stat-number">9.5/10</span>
+              <span class="stat-label">Ankle Stability & Lock Support Rating</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">TPU</span>
+              <span class="stat-label">Reinforced Thermoplastic Outer Shell</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">180°</span>
+              <span class="stat-label">Ergonomic Heel Counter Wrap Coverage</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-image parallax-container">
+          <!-- TPU Outline Highlight overlay -->
+          <div class="tpu-pulse-outline">
+            <div class="tpu-pulse-label">Reinforced TPU</div>
+          </div>
+          <img class="parallax-img" src="assets/shoe_back_heel.png" alt="Back heel view of PYCK AIR ONE showcasing the pull tab and structure" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: FEATURE — CUSTOM INSOLE -->
+    <section id="feature-insole" class="feature-sec">
+      <div class="grid-container">
+        <div class="col-image parallax-container">
+          <!-- Heatmap Overlay over insole view -->
+          <div class="heatmap-overlay"></div>
+          <img class="parallax-img" src="assets/shoe_top_down.png" alt="Bird's eye top-down view of PYCK AIR ONE looking down at insole" loading="lazy">
+        </div>
+        <div class="col-text">
+          <span class="feat-label">Ergonomics</span>
+          <h3 class="feat-title">YOUR SOLE.<br>YOUR MOLD.</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">The OrthoFoam™ memory cell compound conforms specifically to your footprint, distributing pressure evenly across the arch and heel for custom-tailored stride mechanics.</p>
+          <ul class="feat-list">
+            <li class="feat-list-item">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>OrthoFoam™ shock-dampening memory tech</span>
+            </li>
+            <li class="feat-list-item">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>Arch-mapped anatomical pressure loading zones</span>
+            </li>
+            <li class="feat-list-item">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              <span>Fully removable, hygienic, wash-safe design</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: ANATOMY — EXPLODED VIEW -->
+    <section id="anatomy">
+      <div class="anatomy-header">
+        <span class="anatomy-label">Anatomy Of</span>
+        <h2 class="anatomy-title">PERFECTION</h2>
+      </div>
+
+      <div class="anatomy-visual-container">
+        <!-- Interactive pointers (absolute positioned) -->
+        <div class="anatomy-pointer" id="pointer-laces">
+          <div class="pointer-text">
+            <span class="pointer-title">Reinforced Nylon Laces</span>
+            <span class="pointer-desc">High-tensile strength fibers for a secure lock down.</span>
+          </div>
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-tongue">
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+          <div class="pointer-text" style="text-align: right;">
+            <span class="pointer-title">Padded Collar & Tongue</span>
+            <span class="pointer-desc">Plush padding prevents lace bite and supports ankle.</span>
+          </div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-upper">
+          <div class="pointer-text">
+            <span class="pointer-title">Premium Leather Upper</span>
+            <span class="pointer-desc">Tumbled Italian leather panels that flex naturally.</span>
+          </div>
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-mesh">
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+          <div class="pointer-text" style="text-align: right;">
+            <span class="pointer-title">Breathable Mesh Liner</span>
+            <span class="pointer-desc">Moisture-wicking, micro-perforated lining sheets.</span>
+          </div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-insole">
+          <div class="pointer-text">
+            <span class="pointer-title">OrthoFoam™ Insole</span>
+            <span class="pointer-desc">Anatomical memory cushioning that maps your foot.</span>
+          </div>
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-midsole">
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+          <div class="pointer-text" style="text-align: right;">
+            <span class="pointer-title">Air Cushion Midsole</span>
+            <span class="pointer-desc">High-absorption energy return pressurized capsules.</span>
+          </div>
+        </div>
+
+        <div class="anatomy-pointer" id="pointer-outsole">
+          <div class="pointer-text">
+            <span class="pointer-title">Rubber Outsole</span>
+            <span class="pointer-desc">Herringbone pattern rubber sole for maximum multi-directional grip.</span>
+          </div>
+          <div class="pointer-line"><div class="pointer-dot"></div></div>
+        </div>
+
+        <img class="exploded-shoe-img" src="assets/shoe_exploded.png" alt="Exploded assembly diagram of PYCK AIR ONE showing all internal and external layers" loading="lazy">
+      </div>
+
+      <div class="anatomy-footer">7 layers. One legend.</div>
+    </section>
+
+    <!-- SECTION 10: COLORWAYS -->
+    <section id="colorways">
+      <div class="colorways-intro">
+        <span class="colorways-intro-label">Choose Your</span>
+        <h2 class="colorways-intro-title">Identity</h2>
+      </div>
+
+      <div class="colorways-snap-container" id="js-colorways-scroll-container">
+        
+        <!-- Colorway 1: Shadow Black -->
+        <div class="colorway-slide active" data-color="black" style="background-color: #0a0a0a;">
+          <div class="colorway-img-wrap">
+            <img src="assets/shoe_shadow_black.png" alt="PYCK AIR ONE in Shadow Black colorway" loading="lazy">
+          </div>
+          <div class="colorway-details">
+            <h3 class="colorway-name" style="color: var(--white);">Shadow Black</h3>
+            <p class="colorway-tagline">For those who move in silence.</p>
+          </div>
+        </div>
+
+        <!-- Colorway 2: Glacier White -->
+        <div class="colorway-slide" data-color="white" style="background-color: #f5f5f7;">
+          <div class="colorway-img-wrap">
+            <img src="assets/shoe_glacier_white.png" alt="PYCK AIR ONE in Glacier White colorway" loading="lazy">
+          </div>
+          <div class="colorway-details">
+            <h3 class="colorway-name" style="color: var(--black);">Glacier White</h3>
+            <p class="colorway-tagline" style="color: var(--grey-mid);">Clean. Crisp. Unapologetic.</p>
+          </div>
+        </div>
+
+        <!-- Colorway 3: Crimson Heat -->
+        <div class="colorway-slide" data-color="crimson" style="background-color: #1a0505;">
+          <div class="colorway-img-wrap">
+            <img src="assets/shoe_crimson_heat.png" alt="PYCK AIR ONE in Crimson Heat colorway" loading="lazy">
+          </div>
+          <div class="colorway-details">
+            <h3 class="colorway-name" style="color: var(--white);">Crimson Heat</h3>
+            <p class="colorway-tagline" style="color: #bb5555;">Turn heads. Break necks.</p>
+          </div>
+        </div>
+
+        <!-- Colorway 4: Midnight Navy -->
+        <div class="colorway-slide" data-color="navy" style="background-color: #050a15;">
+          <div class="colorway-img-wrap">
+            <img src="assets/shoe_midnight_navy.png" alt="PYCK AIR ONE in Midnight Navy colorway" loading="lazy">
+          </div>
+          <div class="colorway-details">
+            <h3 class="colorway-name" style="color: var(--white);">Midnight Navy</h3>
+            <p class="colorway-tagline" style="color: #5577aa;">Depth. Dimension. Dominance.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Color Selector Dots -->
+      <div class="color-picker-bar" id="js-color-picker">
+        <div class="color-picker-dot dot-black active" data-index="0" title="Shadow Black"></div>
+        <div class="color-picker-dot dot-white" data-index="1" title="Glacier White"></div>
+        <div class="color-picker-dot dot-crimson" data-index="2" title="Crimson Heat"></div>
+        <div class="color-picker-dot dot-navy" data-index="3" title="Midnight Navy"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: SIZE & FIT -->
+    <section id="sizing">
+      <div class="grid-container">
+        <div class="col-image">
+          <!-- Measurement dashed dimension lines overlay -->
+          <div class="dimensions-overlay-lines">
+            <div class="dim-line dim-width">
+              <span class="dim-label dim-width-label" id="js-width-val">Width: 10.2 cm</span>
+            </div>
+            <div class="dim-line dim-height">
+              <span class="dim-label dim-height-label" id="js-height-val">Height: 16.0 cm</span>
+            </div>
+          </div>
+          <img src="assets/shoe_side_left.png" alt="Left side profile layout of PYCK AIR ONE showcasing dimension scale markers" loading="lazy">
+        </div>
+        <div class="col-text">
+          <span class="feat-label">Sizing Matrix</span>
+          <h3 class="feat-title">ENGINEERED FIT</h3>
+          <div class="feat-divider"></div>
+          <p class="feat-description">PYCK fits true to size. We recommend ordering your standard Nike/Jordan high-top shoe size. Choose your size below to see details.</p>
+          
+          <!-- Size Selector Grid -->
+          <div class="size-grid" id="js-size-grid">
+            <button class="size-btn" data-us="7" data-eu="40" data-uk="6" data-cm="25">US 7</button>
+            <button class="size-btn" data-us="8" data-eu="41" data-uk="7" data-cm="26">US 8</button>
+            <button class="size-btn" data-us="9" data-eu="42.5" data-uk="8" data-cm="27">US 9</button>
+            <button class="size-btn active" data-us="10" data-eu="44" data-uk="9" data-cm="28">US 10</button>
+            <button class="size-btn" data-us="11" data-eu="45" data-uk="10" data-cm="29">US 11</button>
+            <button class="size-btn" data-us="12" data-eu="46" data-uk="11" data-cm="30">US 12</button>
+            <button class="size-btn" data-us="13" data-eu="47.5" data-uk="12" data-cm="31">US 13</button>
+          </div>
+
+          <div class="width-toggle-container">
+            <span class="width-toggle-label">Foot Width:</span>
+            <button class="width-toggle-btn active" id="js-width-reg">Regular</button>
+            <button class="width-toggle-btn" id="js-width-wide">Wide (+0.4cm)</button>
+          </div>
+
+          <!-- Dynamic conversion helper text -->
+          <div class="conversion-helper" id="js-conversion-text">
+            US 10 = EU 44 = UK 9 = 28.0 cm length (Regular fit)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PRICING -->
+    <section id="pricing">
+      <div class="pricing-header">
+        <span class="feat-label">Pre-Order Matrix</span>
+        <div class="price-tag" id="js-price-display">$0</div>
+        <p class="price-subtitle">Free worldwide shipping. Hassle-free 30-day returns.</p>
+      </div>
+
+      <div class="pricing-cards-container">
+        <!-- Card 1: Standard Edition -->
+        <div class="pricing-card">
+          <span class="card-tier">Standard Edition</span>
+          <span class="card-price">$189</span>
+          <ul class="card-features">
+            <li>Any colorway model selection</li>
+            <li>Recycled classic shoe box</li>
+            <li>Standard flat-rate shipping</li>
+            <li>30-day wear trial program</li>
+          </ul>
+          <button class="card-btn outline">Select Standard</button>
+        </div>
+
+        <!-- Card 2: Premium Pack (Featured) -->
+        <div class="pricing-card featured">
+          <div class="featured-badge">Most Popular</div>
+          <span class="card-tier">Premium Edition</span>
+          <span class="card-price">$209</span>
+          <ul class="card-features">
+            <li>Any colorway model selection</li>
+            <li>Custom textured sliding box</li>
+            <li>Premium extra lace kit (2 colors)</li>
+            <li>PYCK dynamic cleaning sponge</li>
+            <li>Priority courier shipping</li>
+          </ul>
+          <button class="card-btn solid">Select Premium</button>
+        </div>
+
+        <!-- Card 3: Collector Pack -->
+        <div class="pricing-card">
+          <span class="card-tier">Collector Edition</span>
+          <span class="card-price">$249</span>
+          <ul class="card-features">
+            <li>Limited numbered box (#/500)</li>
+            <li>Clear acrylic display crate case</li>
+            <li>Steel engraved authenticity certificate</li>
+            <li>All Premium perk kit accessories</li>
+            <li>Insured expedited courier shipping</li>
+          </ul>
+          <button class="card-btn outline">Select Collector</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: LIFESTYLE GALLERY -->
+    <section id="lifestyle">
+      <div class="lifestyle-header">
+        <span class="lifestyle-label">In the Wild</span>
+        <h2 class="feat-title">EXPLORE THE SCENE</h2>
+      </div>
+
+      <!-- Horizontal scrolling track -->
+      <div class="lifestyle-horizontal-container" id="js-lifestyle-track">
+        
+        <!-- Slide 1 -->
+        <div class="lifestyle-card">
+          <img src="assets/lifestyle-street.jpg" alt="A person walking down a neon lit wet urban city street at night wearing black and orange sneakers" loading="lazy">
+          <div class="lifestyle-overlay">
+            <span class="lifestyle-title">Built for the streets</span>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="lifestyle-card">
+          <img src="assets/lifestyle-studio.jpg" alt="Fashion editorial style picture of a person sitting on a white box wearing high-top sneakers" loading="lazy">
+          <div class="lifestyle-overlay">
+            <span class="lifestyle-title">Designed for the stage</span>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="lifestyle-card">
+          <img src="assets/lifestyle-court.jpg" alt="Action shot of a basketball player jumping towards the hoop with sports shoes visible" loading="lazy">
+          <div class="lifestyle-overlay">
+            <span class="lifestyle-title">Tested on the court</span>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="lifestyle-card">
+          <img src="assets/lifestyle-urban.jpg" alt="Casual streetwear outfit modeling sneakers at a city rooftop location during sunset" loading="lazy">
+          <div class="lifestyle-overlay">
+            <span class="lifestyle-title">Worn by the bold</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lifestyle-scroll-helper">Drag or Swipe to Explore &rarr;</div>
+    </section>
+
+    <!-- SECTION 14: REVIEWS -->
+    <section id="reviews">
+      <div class="reviews-header">
+        <span class="reviews-label">Testimonials</span>
+        <h2 class="reviews-title">WHAT THEY'RE SAYING</h2>
+      </div>
+
+      <div class="reviews-grid">
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"The most comfortable high-tops I've ever worn. The Air Cushion responsiveness is no joke—felt perfect straight out of the box."</p>
+          <span class="review-author">— Marcus J., New York</span>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Everyone at the photoshoot was asking about these. The Crimson Heat colorway details look absolutely premium in real life."</p>
+          <span class="review-author">— Priya K., Los Angeles</span>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Feels premium, looks premium. The packaging detail on the premium edition shows the amount of obsession behind this design."</p>
+          <span class="review-author">— David L., London</span>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-text">"Tumbled leather grain matches luxury fashion labels charging double. Standard fit matches my AJ1 size perfectly. Solid grip."</p>
+          <span class="review-author">— Sarah M., Toronto</span>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Collector crate sits proudly on my shelf. The actual design looks futuristic yet clean. High-density TPU anchors the heel nicely."</p>
+          <span class="review-author">— James W., Tokyo</span>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Zero friction, zero heel slip. Walked 12 miles on day one with absolutely zero discomfort. PYCK completely delivered."</p>
+          <span class="review-author">— Olivia R., Berlin</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: NEWSLETTER & FOOTER -->
+    <section id="footer-section">
+      
+      <div class="newsletter-container">
+        <!-- Floating Tilted Dynamic shoe inside newsletter bg -->
+        <img class="newsletter-bg-image floating" src="assets/shoe_tilted_dynamic.png" alt="Dynamic angled display shoe floating outline" loading="lazy">
+        
+        <span class="news-label">Subscribe</span>
+        <h2 class="news-title" id="js-news-title">
+          <span>J</span><span>O</span><span>I</span><span>N</span>&nbsp;<span>T</span><span>H</span><span>E</span><br>
+          <span>M</span><span>O</span><span>V</span><span>E</span><span>M</span><span>E</span><span>N</span><span>T</span>
+        </h2>
+        <p class="news-desc">Be first to access limited production runs, collaborative drops, and exclusive colorway releases.</p>
+        
+        <form class="news-form" id="js-news-form" action="#" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+          <input type="email" class="news-input" placeholder="ENTER YOUR EMAIL" aria-label="Email address signup" required>
+          <button type="submit" class="news-btn">Notify Me</button>
+        </form>
+
+        <!-- Social Links row -->
+        <div class="news-socials">
+          <a href="#" class="social-icon-btn" aria-label="Instagram Profile" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" class="social-icon-btn" aria-label="Twitter X Profile" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="social-icon-btn" aria-label="TikTok Profile" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.52-4.06-1.39-.28-.2-.53-.43-.77-.68v6.78c.03 2.05-.62 4.19-2.07 5.64-1.57 1.59-3.95 2.26-6.17 1.83-2.22-.44-4.15-2.04-4.96-4.17-.96-2.52-.33-5.6 1.61-7.51 1.61-1.58 4.02-2.12 6.18-1.44V12.7c-1.22-.38-2.61-.17-3.64.62-1.07.82-1.54 2.26-1.23 3.59.3 1.28 1.44 2.29 2.76 2.45 1.35.16 2.8-.59 3.29-1.87.16-.42.22-.88.22-1.33V.02z"/></svg>
+          </a>
+          <a href="#" class="social-icon-btn" aria-label="YouTube Channel" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+      <div style="width: 100%;">
+        <div class="footer-divider"></div>
+
+        <div class="footer-grid">
+          <!-- Column 1 -->
+          <div class="footer-col">
+            <span class="footer-col-title">Shop</span>
+            <ul>
+              <li><a href="#hero">Air One</a></li>
+              <li><a href="#">Accessories</a></li>
+              <li><a href="#">Gift Cards</a></li>
+              <li><a href="#">Limited Drops</a></li>
+            </ul>
+          </div>
+          <!-- Column 2 -->
+          <div class="footer-col">
+            <span class="footer-col-title">Support</span>
+            <ul>
+              <li><a href="#">FAQ & Support</a></li>
+              <li><a href="#">Returns Portal</a></li>
+              <li><a href="#sizing">Sizing Guide</a></li>
+              <li><a href="#">Order Tracking</a></li>
+            </ul>
+          </div>
+          <!-- Column 3 -->
+          <div class="footer-col">
+            <span class="footer-col-title">Company</span>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press Kit</a></li>
+              <li><a href="#">Sustainability</a></li>
+            </ul>
+          </div>
+          <!-- Column 4 -->
+          <div class="footer-col">
+            <span class="footer-col-title">Legal</span>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Cookie settings</a></li>
+              <li><a href="#">Accessibility</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <div class="footer-bottom-left">
+            <!-- PYCK Logo Mini -->
+            <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 5 H25 C33 5, 36 10, 36 16 C36 22, 33 27, 25 27 H18 V35 H10 V5 Z M18 11 V21 H24 C27 21, 28 20, 28 16 C28 12, 27 11, 24 11 H18 Z" fill="currentColor" />
+              <path d="M42 5 L52 20 L62 5 H70 L55 25 V35 H47 V25 L32 5 H42 Z" fill="currentColor" />
+              <path d="M96 8 C93 6, 90 5, 87 5 C78 5, 72 12, 72 20 C72 28, 78 35, 87 35 C90 35, 93 34, 96 32 V26 C93 28, 91 29, 87 29 C83 29, 80 25, 80 20 C80 15, 83 11, 87 11 C91 11, 93 12, 96 14 V8 Z" fill="currentColor" />
+              <path d="M104 5 H112 V18 L122 5 H132 L119 20 L133 35 H123 L112 22 V35 H104 V5 Z" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="footer-bottom-center">Designed with obsession.</div>
+          <div class="footer-bottom-right">&copy; 2026 PYCK Inc. All rights reserved.</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- GSAP Core & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Lenis CDN for smooth scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+  <!-- JS Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("🔥 PYCK — Step Into the Future.");
+
+      /* ═══ 1. LENIS SMOOTH SCROLLING ═══ */
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Connect Lenis to GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time)=>{
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+
+      /* ═══ 2. CUSTOM CURSOR TRACKING ═══ */
+      const cursor = document.getElementById("custom-cursor");
+      const follower = document.getElementById("custom-cursor-follower");
+
+      if (window.innerWidth > 768) {
+        let mouseX = 0, mouseY = 0;
+        let followX = 0, followY = 0;
+
+        document.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursor.style.left = mouseX + "px";
+          cursor.style.top = mouseY + "px";
+        });
+
+        // Add elastic lag to the follower
+        function updateFollower() {
+          const dx = mouseX - followX;
+          const dy = mouseY - followY;
+          followX += dx * 0.15;
+          followY += dy * 0.15;
+          follower.style.left = followX + "px";
+          follower.style.top = followY + "px";
+          requestAnimationFrame(updateFollower);
+        }
+        updateFollower();
+
+        // Mouse hover states for interactive objects
+        const interactives = document.querySelectorAll("a, button, .color-picker-dot, .size-btn, .width-toggle-btn");
+        interactives.forEach(el => {
+          el.addEventListener("mouseenter", () => {
+            document.body.classList.add("hover-interactive");
+          });
+          el.addEventListener("mouseleave", () => {
+            document.body.classList.remove("hover-interactive");
+          });
+        });
+      }
+
+
+      /* ═══ 3. SCROLL PROGRESS BAR ═══ */
+      window.addEventListener("scroll", () => {
+        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("js-scroll-progress").style.width = scrolled + "%";
+
+        // Navigation style update on scroll
+        const nav = document.getElementById("js-navbar");
+        if (winScroll > 80) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+
+
+      /* ═══ 4. MOBILE HAMBURGER MENU ═══ */
+      const hamburger = document.getElementById("js-hamburger");
+      const mobileMenu = document.getElementById("js-mobile-menu");
+      const mobileLinks = document.querySelectorAll(".js-mobile-link");
+
+      hamburger.addEventListener("click", () => {
+        const expanded = hamburger.getAttribute("aria-expanded") === "true";
+        hamburger.setAttribute("aria-expanded", !expanded);
+        hamburger.classList.toggle("active");
+        mobileMenu.classList.toggle("active");
+        if (!expanded) {
+          lenis.stop(); // Stop scroll when menu is open
+        } else {
+          lenis.start();
+        }
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          hamburger.setAttribute("aria-expanded", "false");
+          mobileMenu.classList.remove("active");
+          lenis.start();
+        });
+      });
+
+
+      /* ═══ 5. PRELOADER & COUNTER TIMELINE ═══ */
+      const loaderLine = document.getElementById("js-loader-line");
+      const loaderCounter = document.getElementById("js-loader-counter");
+      const loaderLogo = document.getElementById("js-loader-logo");
+      const preloader = document.getElementById("preloader");
+
+      let count = { val: 0 };
+      const preloaderTimeline = gsap.timeline({
+        onComplete: () => {
+          // Circular reveal on complete
+          gsap.to(preloader, {
+            clipPath: "circle(0% at 50% 50%)",
+            duration: 1.2,
+            ease: "power4.inOut",
+            onComplete: () => {
+              preloader.style.display = "none";
+              // Trigger Hero entrance animations
+              animateHeroEntrance();
+            }
+          });
+        }
+      });
+
+      // Animate line & count concurrently
+      preloaderTimeline.to(count, {
+        val: 100,
+        duration: 2.2,
+        ease: "power2.out",
+        onUpdate: () => {
+          loaderCounter.innerText = Math.floor(count.val) + "%";
+          loaderLine.style.width = count.val + "%";
+        }
+      }, 0);
+
+      preloaderTimeline.to(loaderLogo, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "power3.out"
+      }, 0.2);
+
+      preloaderTimeline.to([loaderLogo, loaderCounter, loaderLine.parentElement], {
+        opacity: 0,
+        y: -30,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.in"
+      }, 1.8);
+
+
+      /* ═══ 6. HERO ENTRANCE ANIMATIONS ═══ */
+      function animateHeroEntrance() {
+        const tl = gsap.timeline();
+
+        tl.fromTo("#js-hero-title", {
+          y: -100,
+          opacity: 0
+        }, {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power4.out"
+        });
+
+        tl.fromTo("#js-hero-shoe", {
+          y: 150,
+          opacity: 0,
+          scale: 0.7,
+          rotate: -15
+        }, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotate: 0,
+          duration: 1.6,
+          ease: "elastic.out(1, 0.75)"
+        }, 0.2);
+
+        tl.fromTo("#js-hero-shadow", {
+          scale: 0.1,
+          opacity: 0
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1.4,
+          ease: "power3.out"
+        }, 0.4);
+
+        tl.to("#js-hero-tagline", {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, 1.0);
+
+        tl.to("#js-hero-cta", {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, 1.2);
+
+        // Subtle floating loop for shoe
+        gsap.to("#js-hero-shoe", {
+          y: -15,
+          duration: 2.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut"
+        });
+
+        gsap.to("#js-hero-shadow", {
+          scale: 0.85,
+          opacity: 0.4,
+          duration: 2.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut"
+        });
+      }
+
+
+      /* ═══ 7. INTRO MANIFESTO TEXT REVEALS (SCROLLTRIGGER) ═══ */
+      const triggers = document.querySelectorAll(".manifesto-trigger");
+      triggers.forEach((el) => {
+        gsap.to(el, {
+          y: "0%",
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      });
+
+      gsap.to("#js-manifesto-subtext", {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#js-manifesto-subtext",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+
+      /* ═══ 8. PARALLAX MOUSE TILT EFFECT (DESKTOP ONLY) ═══ */
+      if (window.innerWidth > 768) {
+        const containers = document.querySelectorAll(".parallax-container");
+        containers.forEach(container => {
+          const img = container.querySelector(".parallax-img");
+          container.addEventListener("mousemove", (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width/2;
+            const y = e.clientY - rect.top - rect.height/2;
+            // Max tilt: ±8 degrees
+            const rotateX = -(y / (rect.height/2)) * 8;
+            const rotateY = (x / (rect.width/2)) * 8;
+            gsap.to(img, {
+              rotateX: rotateX,
+              rotateY: rotateY,
+              transformPerspective: 1000,
+              duration: 0.4,
+              ease: "power2.out"
+            });
+          });
+
+          container.addEventListener("mouseleave", () => {
+            gsap.to(img, {
+              rotateX: 0,
+              rotateY: 0,
+              duration: 0.6,
+              ease: "power3.out"
+            });
+          });
+        });
+      }
+
+
+      /* ═══ 9. MESH AIRFLOW PARTICLE EFFECT ═══ */
+      const particleContainer = document.getElementById("js-particle-container");
+      const particleCount = 20;
+
+      for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement("div");
+        p.classList.add("mesh-particle");
+        // Randomize placement and speed
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDelay = Math.random() * 5 + "s";
+        p.style.animationDuration = 3 + Math.random() * 5 + "s";
+        particleContainer.appendChild(p);
+      }
+
+
+      /* ═══ 10. SECTION 9: ANATOMY EXPLODED VIEW TRANSITIONS ═══ */
+      // Scroll background from black to white
+      gsap.to("#anatomy", {
+        backgroundColor: "#f5f5f7",
+        color: "#000000",
+        scrollTrigger: {
+          trigger: "#anatomy",
+          start: "top 60%",
+          end: "top 20%",
+          scrub: true
+        }
+      });
+
+      // Staggered pointers reveal
+      const pointers = document.querySelectorAll(".anatomy-pointer");
+      pointers.forEach((pointer, index) => {
+        ScrollTrigger.create({
+          trigger: "#anatomy",
+          start: "top 30%",
+          onEnter: () => {
+            setTimeout(() => {
+              pointer.classList.add("active");
+            }, index * 200);
+          },
+          onLeaveBack: () => {
+            pointer.classList.remove("active");
+          }
+        });
+      });
+
+
+      /* ═══ 11. SECTION 10: COLORWAYS DYNAMIC SCROLL AND BG CHANGE ═══ */
+      const slides = document.querySelectorAll(".colorway-slide");
+      const pickerDots = document.querySelectorAll(".color-picker-dot");
+      const pickerBar = document.getElementById("js-color-picker");
+
+      // Show/hide sticky picker bar inside colorways container
+      ScrollTrigger.create({
+        trigger: "#colorways",
+        start: "top 40%",
+        end: "bottom 60%",
+        onEnter: () => pickerBar.classList.add("visible"),
+        onLeave: () => pickerBar.classList.remove("visible"),
+        onEnterBack: () => pickerBar.classList.add("visible"),
+        onLeaveBack: () => pickerBar.classList.remove("visible")
+      });
+
+      slides.forEach((slide, i) => {
+        ScrollTrigger.create({
+          trigger: slide,
+          start: "top 50%",
+          end: "bottom 50%",
+          onEnter: () => setActiveColorway(i),
+          onEnterBack: () => setActiveColorway(i)
+        });
+      });
+
+      function setActiveColorway(index) {
+        // Toggle slide active states
+        slides.forEach((s, idx) => {
+          if (idx === index) s.classList.add("active");
+          else s.classList.remove("active");
+        });
+
+        // Toggle dot active states
+        pickerDots.forEach((d, idx) => {
+          if (idx === index) d.classList.add("active");
+          else d.classList.remove("active");
+        });
+      }
+
+      // Dot clicking snaps scroll to slide
+      pickerDots.forEach(dot => {
+        dot.addEventListener("click", () => {
+          const idx = parseInt(dot.getAttribute("data-index"));
+          const targetSlide = slides[idx];
+          // Use Lenis smooth scroll
+          lenis.scrollTo(targetSlide);
+        });
+      });
+
+
+      /* ═══ 12. SECTION 11: SIZE & FIT INTERACTION ═══ */
+      const sizeBtns = document.querySelectorAll(".size-btn");
+      const widthReg = document.getElementById("js-width-reg");
+      const widthWide = document.getElementById("js-width-wide");
+      const conversionText = document.getElementById("js-conversion-text");
+      const widthValText = document.getElementById("js-width-val");
+      const heightValText = document.getElementById("js-height-val");
+
+      let selectedSize = 10;
+      let selectedWidth = "Regular";
+      let baseWidths = { 7: 9.6, 8: 9.8, 9: 10.0, 10: 10.2, 11: 10.4, 12: 10.6, 13: 10.8 };
+      let baseHeights = { 7: 14.8, 8: 15.2, 9: 15.6, 10: 16.0, 11: 16.4, 12: 16.8, 13: 17.2 };
+
+      function updateSizingDisplay() {
+        const activeBtn = document.querySelector(".size-btn.active");
+        const us = activeBtn.getAttribute("data-us");
+        const eu = activeBtn.getAttribute("data-eu");
+        const uk = activeBtn.getAttribute("data-uk");
+        const cm = activeBtn.getAttribute("data-cm");
+
+        let calculatedWidth = baseWidths[us];
+        if (selectedWidth === "Wide") {
+          calculatedWidth = (parseFloat(calculatedWidth) + 0.4).toFixed(1);
+        }
+
+        widthValText.innerText = `Width: ${calculatedWidth} cm`;
+        heightValText.innerText = `Height: ${baseHeights[us]} cm`;
+
+        conversionText.innerText = `US ${us} = EU ${eu} = UK ${uk} = ${cm}.0 cm length (${selectedWidth} fit)`;
+      }
+
+      sizeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          sizeBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedSize = btn.getAttribute("data-us");
+          updateSizingDisplay();
+        });
+      });
+
+      widthReg.addEventListener("click", () => {
+        widthReg.classList.add("active");
+        widthWide.classList.remove("active");
+        selectedWidth = "Regular";
+        updateSizingDisplay();
+      });
+
+      widthWide.addEventListener("click", () => {
+        widthWide.classList.add("active");
+        widthReg.classList.remove("active");
+        selectedWidth = "Wide";
+        updateSizingDisplay();
+      });
+
+      // Run initial sizing
+      updateSizingDisplay();
+
+
+      /* ═══ 13. SECTION 12: PRICING COUNT-UP ANIMATION ═══ */
+      const priceDisplay = document.getElementById("js-price-display");
+      const countPrice = { val: 0 };
+      
+      gsap.to(countPrice, {
+        val: 189,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#pricing",
+          start: "top 65%",
+          toggleActions: "play none none reverse"
+        },
+        onUpdate: () => {
+          priceDisplay.innerText = "$" + Math.floor(countPrice.val);
+        }
+      });
+
+
+      /* ═══ 14. SECTION 13: LIFESTYLE GALLERY HORIZONTAL DRAG ═══ */
+      const track = document.getElementById("js-lifestyle-track");
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      track.addEventListener("mousedown", (e) => {
+        isDown = true;
+        track.style.cursor = "grabbing";
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+
+      track.addEventListener("mouseleave", () => {
+        isDown = false;
+        track.style.cursor = "grab";
+      });
+
+      track.addEventListener("mouseup", () => {
+        isDown = false;
+        track.style.cursor = "grab";
+      });
+
+      track.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2; // scroll speed multiplier
+        track.scrollLeft = scrollLeft - walk;
+      });
+
+      track.style.cursor = "grab";
+
+
+      /* ═══ 15. SECTION 15: NEWSLETTER SPLIT TEXT ANIMATION ═══ */
+      const newsTitle = document.getElementById("js-news-title");
+      const letters = newsTitle.querySelectorAll("span");
+
+      gsap.fromTo(letters, {
+        y: 60,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.04,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: "#footer-section",
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+  </script>
+</body>
+</html>
